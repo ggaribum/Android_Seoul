@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,7 +64,11 @@ public class DetailActivity extends AppCompatActivity {
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#000000")));
         home = new Intent(this, MainActivity.class);
 
-        fragmentInfo = new Fragment_Detail_Info();
+        try {
+            fragmentInfo = new Fragment_Detail_Info();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         fragmentComment = new Fragment_Detail_Comment();
         fragmentBest = new Fragment_Detail_Best();
 
@@ -98,7 +103,7 @@ public class DetailActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     detailMainList = response.body().getDetailList();
                     //str=detailMainList.get(0).getArea();
-
+                    //레트로핏으로 불러온 값을 프래그먼트에 뿌려줄 방법이 뭐가있을까...
                     //어뎁터를 리사이클러뷰에 연결
                     adapter = new Adapter_Detail(getApplicationContext(),detailMainList);
                     rv_detail.setLayoutManager(manager);
